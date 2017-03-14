@@ -136,8 +136,11 @@ WSGIScriptAlias / <your_django_project_path>/TorProject/wsgi.py
 ```
 
 **N.B.**
+
 **<your_django_project_name>** refers to the main directory's name of your project
+
 **default:** 'onionGatherer-Server'
+
 **<your_django_project_path>** refers to the main directory's path of your project.
 
 # Screenshots
