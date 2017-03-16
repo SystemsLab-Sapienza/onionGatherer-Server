@@ -15,11 +15,13 @@ The hidden services statuses are evaluated using the curl command via torsocket,
 ### Summary
 
   - Install Apache2
+  - Install the Apache2's module wsgi
   - Install Pip
   - Install Django
-  - Install cors-headers module from Django
+  - Install cors-headers module
   - Install psycopg2 module
-  - Install socksipy module
+  - Install python-socks module
+  - Install torsocks module
   - Install Postgres
   - Modify the configuration file of Postgres
   - Create the database and import the preconfigured scheme
@@ -31,6 +33,10 @@ $ sudo apt-get update
 $ sudo apt-get install apache2
 ```
 
+Install the Apache2's module wsgi
+```sh
+$ sudo apt-get install libapache2-mod-wsgi
+```
 
 Install Pip
 ```sh
@@ -42,20 +48,24 @@ Install Django
 $ sudo pip install django
 ```
 
-Install cors-headers module from Django
+Install cors-headers module
 ```sh
 $ sudo pip install django-cors-headers
 ```
 
 Install psycopg2 module
 ```sh
-$ sudo apt-get build-dep python-psycopg2
-$ sudo apt-get install psycopg2
+$ sudo apt-get install python-psycopg2
 ```
 
-Install socksipy module
+Install python-socks module
 ```sh
-$ sudo apt-get install python-socksipy
+$ sudo apt-get install python-socks
+```
+
+Install torsocks module
+```sh
+$ sudo apt-get install torsocks
 ```
 
 Install postgres
@@ -64,7 +74,7 @@ $ sudo apt-get update
 $ sudo apt-get install postgresql postgresql-contrib
 ```
 
-Modify the configuration file **/etc/[your_version_of_postgres]/main/pg_hba.conf** replacing the line: 
+Modify the configuration file **/etc/postgresql/[your_version_of_postgres]/main/pg_hba.conf** replacing the line: 
 
 > local all postgres peer
 
@@ -119,19 +129,33 @@ Alias /static <your_django_project_path>/static
         Require all granted
     </Files>
 </Directory>
+
+WSGIDaemonProcess <your_django_project_name> python-path=<your_django_project_path>:<your_django_project_path>/onionGathererEnv/lib/python2.7/sites-packages
+WSGIProcessGroup <your_django_project_name>
+WSGIScriptAlias / <your_django_project_path>/TorProject/wsgi.py
 ```
 
-####Figure 1a. thehiddenwiki.org without OnionGatherer Chrome extension
+**N.B.**
+
+**<your_django_project_name>** refers to the main directory's name of your project
+
+**default:** 'onionGatherer-Server'
+
+**<your_django_project_path>** refers to the main directory's path of your project.
+
+# Screenshots
+
+##### Figure 1a. thehiddenwiki.org without OnionGatherer Chrome extension
 ![Screenshot without plugin](figures/image1withoutplugin.png)
 _________________________________________________________________________
 
-####Figure 1b. thehiddenwiki.org with OnionGatherer Chrome extension
+##### Figure 1b. thehiddenwiki.org with OnionGatherer Chrome extension
 ![Screenshot with plugin](figures/image1withplugin.png)
 _________________________________________________________________________
 
-####Figure 2a. the-hidden-wiki.com without OnionGatherer Chrome extension
+##### Figure 2a. the-hidden-wiki.com without OnionGatherer Chrome extension
 ![Screenshot without plugin](figures/image2withoutplugin.jpeg)
 _________________________________________________________________________
 
-####Figure 2b. the-hidden-wiki.com with OnionGatherer Chrome extension
+##### Figure 2b. the-hidden-wiki.com with OnionGatherer Chrome extension
 ![Screenshot with plugin](figures/image2withplugin.jpeg)
