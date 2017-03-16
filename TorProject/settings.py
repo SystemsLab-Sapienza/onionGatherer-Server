@@ -25,8 +25,7 @@ SECRET_KEY = '^z$$#lue#=cz+3rz%+kw5b=wx!^m93l9=w20g$&0^k(bghs!0&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.0.38']
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
