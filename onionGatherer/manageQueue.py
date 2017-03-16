@@ -15,9 +15,15 @@ q = None
 	It allows to get the httpStatus of each hidden service
 '''
 def getStatus(urlTuple):
-	command = "torsocks curl -o /dev/null --max-time 10 --silent --head --write-out '%{http_code}\n' " + str(urlTuple[0])
-	process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-	httpStatus = process.communicate()[0]
+	try:
+		httpStatus = subprocess.check_output(['torsocks','curl','-o','/dev/null','--silent','--write-out','%{http_code}', str(urlTuple[0])])
+	except subprocess.CalledProcessError, e:
+		if e.output == '000':
+			httpStatus = e.output
+
+		# TODO
+		# Check the return status can only be '000'
+
 	return ((urlTuple[0], urlTuple[1], httpStatus))
 
 '''
