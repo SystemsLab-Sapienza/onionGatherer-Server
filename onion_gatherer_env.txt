@@ -1,0 +1,5 @@
+Django==1.10.6
+django-cors-headers==2.0.2
+psycopg2==2.6.2
+PySocks==1.5.7
+virtualenv==15.1.0

@@ -12,8 +12,31 @@ The addition of the new hidden service addresses in the database is done by a po
 
 The hidden services statuses are evaluated using the curl command via torsocket, a specific socket that allows to use network applications such as ssh and irssi with Tor.
 
-### Summary
+### Installation
 
+##### Installation with virtualenv
+ - Install Pip
+ - Create the environment
+ - Activate the environment
+
+Install Pip
+```sh
+$ sudo apt-get install python-pip
+```
+Create the environment
+```sh
+$ virtualenv -p /usr/bin/python2.7 <your-env-name>
+```
+Activate the environment
+```sh
+$ source <your-env-name>/bin/activate
+```
+Export the environment
+From the main folder of the project type:
+```sh
+(your-env-name) sudo pip install -r onion_gatherer_env.txt
+```
+##### Installation without virtualenv
   - Install Apache2
   - Install the Apache2's module wsgi
   - Install Pip
@@ -87,9 +110,9 @@ After this change you should restart the postgresql server by typing
 $ sudo service postgresql restart
 ```
 
-Move in /tmp the database's schema by typing from the project folder 
+Move in /tmp the database's schema by typing from the project folder:
 ```sh
-$ cp ./oniongatherer.sql /tmp
+$ cp ./onion_gatherer.sql /tmp
 ```
 
 Create the database and import the preconfigured schema
@@ -102,7 +125,7 @@ $ psql
 then exit from that shell by typing CTRL + D and type
 
 ```sh
-$ psql oniongatherer < /tmp/oniongatherer.sql
+$ psql oniongatherer < /tmp/onion_gatherer.sql
 ```
 
 # Bind Apache2 and Django
@@ -130,7 +153,7 @@ Alias /static <your_django_project_path>/static
     </Files>
 </Directory>
 
-WSGIDaemonProcess <your_django_project_name> python-path=<your_django_project_path>:<your_django_project_path>/onionGathererEnv/lib/python2.7/sites-packages
+WSGIDaemonProcess <your_django_project_name> python-path=<your_django_project_path>:<your_django_project_path>/<your-env-name>/lib/python2.7/sites-packages
 WSGIProcessGroup <your_django_project_name>
 WSGIScriptAlias / <your_django_project_path>/TorProject/wsgi.py
 ```
